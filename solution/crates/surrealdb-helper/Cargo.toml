@@ -1,0 +1,16 @@
+[package]
+name = "surrealdb-helper"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kirill Udaltsov <commits@udaltsovk.ru>"]
+
+[lib]
+name = "surrealdb_helper"
+path = "src/lib.rs"
+
+[dependencies]
+include_dir = { workspace = true }
+
+surrealdb = { workspace = true }
+surrealdb-migrations = "2.2"
+

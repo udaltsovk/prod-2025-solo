@@ -1,0 +1,27 @@
+[package]
+name = "bot"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kirill Udaltsov <commits@udaltsovk.ru>"]
+
+[[bin]]
+name = "bot"
+path = "src/main.rs"
+
+[dependencies]
+env-config = { workspace = true }
+
+teloxide = { version = "0.13", features = ["macros"] }
+reqwest = { workspace = true }
+
+tokio = { version =  "1.8", features = ["rt-multi-thread", "macros"] }
+
+log = { workspace = true }
+env_logger = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+uuid = { workspace = true }
+
+

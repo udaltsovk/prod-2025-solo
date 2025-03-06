@@ -1,0 +1,76 @@
+name: ad_platform-prod
+services:
+  db:
+    image: surrealdb/surrealdb:v2.2
+    restart: on-failure
+    user: root
+    volumes:
+      - db-data:/var/lib/surrealdb
+    command:
+      - start
+    environment:
+      SURREAL_USER: ${DB_USER}
+      SURREAL_PASS: ${DB_PASSWORD}
+      SURREAL_PATH: rocksdb:/var/lib/surrealdb
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        CRATE: backend
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      RUST_LOG: ${LOG_LEVEL}
+      SERVER_ADDRESS: 0.0.0.0:8080
+      DB_ADDRESS: db:8000
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAMESPACE: ad_platform
+      DB_NAME: backend
+      MINIO_BASE_URL: http://minio:9000
+      MINIO_USER: ${MINIO_USER}
+      MINIO_PASSWORD: ${MINIO_PASSWORD}
+      MINIO_BUCKET: ad-platform-backend-bucket
+      MODERATION_ENABLED: ${MODERATION_ENABLED}
+  grafana:
+    restart: always
+    image: grafana/grafana-oss
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana:rw
+    environment:
+      GF_PLUGINS_PREINSTALL: yesoreyeram-infinity-datasource
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-02-18T16-25-55Z
+    volumes:
+      - minio-data:/data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+      MINIO_ADDRESS: :9000
+      MINIO_CONSOLE_ADDRESS: :9001
+    command: minio server /data
+  # bot:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #     args:
+  #       CRATE: bot
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     RUST_LOG: ${LOG_LEVEL}
+  #     BACKEND_ADDRESS: backend:8080
+  #     DB_ADDRESS: db:8000
+  #     DB_USER: ${DB_USER}
+  #     DB_PASSWORD: ${DB_PASSWORD}
+  #     DB_NAMESPACE: ad_platform
+volumes:
+  db-data:
+  grafana-data:
+  minio-data:

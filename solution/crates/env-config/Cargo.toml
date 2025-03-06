@@ -1,0 +1,9 @@
+[package]
+name = "env-config"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kirill Udaltsov <commits@udaltsovk.ru>"]
+
+[lib]
+name = "env_config"
+path = "src/lib.rs"

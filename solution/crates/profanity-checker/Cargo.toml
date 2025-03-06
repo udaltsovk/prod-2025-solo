@@ -1,0 +1,27 @@
+[package]
+name = "profanity-checker"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kirill Udaltsov <commits@udaltsovk.ru>"]
+
+[lib]
+name = "profanity_checker"
+path = "src/lib.rs"
+
+[features]
+default = ["embedded-dictionary"]
+embedded-dictionary = []
+
+[dependencies]
+phf = { version = "0.11", features = ["std", "macros"] }
+lazy_static = "1.5"
+regex = "1.11"
+levenshtein = "1.0"
+rayon = "1.10"
+
+[dev-dependencies]
+rstest = { workspace = true }
+
+[build-dependencies]
+phf_codegen = "0.11"
+flate2 = "1.0"

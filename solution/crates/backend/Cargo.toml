@@ -1,0 +1,57 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kirill Udaltsov <commits@udaltsovk.ru>"]
+
+[[bin]]
+name = "backend"
+path = "src/main.rs"
+
+[dependencies]
+env-config = { workspace = true }
+profanity-checker = { workspace = true }
+surrealdb-helper = { workspace = true }
+
+actix-web = "4.9"
+actix-rt = "2.10"
+actix-cors = "0.7"
+# actix-files = "0.6"
+actix-web-lab = "0.23"
+actix-contrib-logger = "0.1"
+actix-multipart = "0.7"
+
+bytes = "1.10"
+async-trait = "0.1"
+include_dir = { workspace = true }
+
+log = { workspace = true }
+env_logger = { workspace = true }
+thiserror = { workspace = true }
+
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+validator = { version = "0.20", features = ["derive"] }
+
+# chrono = { version = "0.4", features = ["serde"] }
+uuid = { workspace = true }
+
+
+utoipa = { version = "5.3", features = ["actix_extras", "uuid"] }
+utoipa-swagger-ui = { version = "9.0", features = ["actix-web", "vendored"] }
+utoipa-actix-web = "0.1"
+
+surrealdb = { workspace = true }
+
+reqwest = { workspace = true, features = ["stream"] }
+minio = "0.1"
+tempfile = "3.10"
+
+[dev-dependencies]
+rstest = { workspace = true }
+serial_test = "3.2"
+
+derivative = "2.2"
+rand = "0.9"
+actix-http = "3.9"

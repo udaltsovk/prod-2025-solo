@@ -1,0 +1,5 @@
+DEFINE TABLE OVERWRITE advertiser 
+    SCHEMAFULL;
+
+DEFINE FIELD OVERWRITE name ON advertiser 
+    TYPE string;
